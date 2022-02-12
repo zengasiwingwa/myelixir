@@ -23,5 +23,17 @@ defmodule Felixir.Auth.User do
     |> validate_length(:name, min: 2, max: 30)
     |> validate_length(:username, min: 8, max: 30)
     |> validate_format(:email, ~r/@/)
+    |> hash_password
+  end
+
+  defp hash_password(%Ecto.Changeset{} = changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
+        new_changeset = put_change(changeset, :password, Argon2.hash_pwd_salt(password))
+        new_changeset
+
+        _ ->
+          changeset
+      end
   end
 end

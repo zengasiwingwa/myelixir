@@ -12,7 +12,7 @@ defmodule FelixirWeb.Schema.Types.UserType do
 
   input_object :registration_input_type do
     field :name, non_null(:string)
-    field :username, non_nul(:string)
+    field :username, non_null(:string)
     field :password, non_null(:string)
     field :email, non_null(:string)
   end

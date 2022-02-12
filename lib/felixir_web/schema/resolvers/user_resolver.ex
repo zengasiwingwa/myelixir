@@ -1,7 +1,11 @@
 defmodule FelixirWeb.Schema.Resolvers.UserResolver do
-  def register_user(_, args, _) do
-    IO.puts("args =>")
-    IO.inspect(args)
+
+  alias Felixir.Auth
+  def register_user(_, %{input: input}, _) do
+    IO.inspect(input)
+    res = Auth.create_user(input)
+    IO.inspect("user --> ")
+    IO.inspect(res)
 
     {:ok, true}
   end

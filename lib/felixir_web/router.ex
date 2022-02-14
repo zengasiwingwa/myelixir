@@ -13,7 +13,7 @@ defmodule FelixirWeb.Router do
 
   scope "/api" do
     pipe_through :api
-    get "/auth", AuthController, :index
+    post "/auth/register", AuthController, :register
   end
 
   scope "/api/graphql" do

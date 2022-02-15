@@ -2,9 +2,12 @@ defmodule FelixirWeb.Router do
   use FelixirWeb, :router
 
   alias FelixirWeb.AuthController
+  alias FelixirWeb.Plugs.PopulateAuth
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug PopulateAuth
   end
 
   pipeline :graphql do

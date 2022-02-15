@@ -49,6 +49,22 @@ defmodule Felixir.Auth do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets a single user.
+
+  Raises `Ecto.NoResultsError` if the User does not exist.
+
+  ## Examples
+
+      iex> get_get_by_username("jaydoe")
+      %User{}
+
+      iex> get_get_by_username("456")
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_by_username(username), do: Repo.get_by(User, username: username)
+
+  @doc """
   Creates a user.
 
   ## Examples

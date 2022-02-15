@@ -18,6 +18,7 @@ defmodule FelixirWeb.Router do
     pipe_through :api
     post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
+    delete "/auth/logout", AuthController, :logout
   end
 
   scope "/api/graphql" do

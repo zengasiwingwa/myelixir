@@ -48,7 +48,7 @@ defmodule FelixirWeb.AuthController do
   def register(conn, params) do
     case Auth.create_user(params) do
       {:ok, _} ->
-        render(conn, "acknowledge.json", %{success: true, message: "Registered!"})
+        render(conn, "acknowledge.json", %{message: "Registered!"})
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "errors.json", %{
@@ -58,6 +58,12 @@ defmodule FelixirWeb.AuthController do
       {_, _} ->
         render(conn, "errors.json", %{errors: Constants.internal_server_error()})
     end
+  end
+
+  def logout(conn, _params) do
+    conn
+    |> Plug.Conn.clear_session()
+    |> render("acknowledge.json", %{message: "Logged Out!"})
   end
 
   defp dont_exploit_me(conn, _params) do

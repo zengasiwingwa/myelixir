@@ -3,6 +3,7 @@ defmodule FelixirWeb.Router do
 
   alias FelixirWeb.AuthController
   alias FelixirWeb.Plugs.PopulateAuth
+  alias FelixirWeb.Plugs.ProtectGraphql
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -12,6 +13,8 @@ defmodule FelixirWeb.Router do
 
   pipeline :graphql do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug ProtectGraphql
   end
 
   scope "/api" do

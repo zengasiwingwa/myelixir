@@ -1,10 +1,15 @@
 defmodule FelixirWeb.AuthController do
   use FelixirWeb, :controller
 
+  import Plug.Conn
+
   alias Felixir.Auth
   alias Felixir.Auth.User
   alias FelixirWeb.Constants
   alias FelixirWeb.Utils
+
+  plug :dont_exploit_me when action in [:login]
+  plug :protect_me when action in [:logout]
 
   def login(conn, params) do
     case User.login_changeset(params) do
@@ -14,7 +19,10 @@ defmodule FelixirWeb.AuthController do
         case user do
           %User{} ->
             if Argon2.verify_pass(password, user.password) do
-              render(conn, "acknowledge.json", %{message: "Logged In"})
+              conn
+              |> put_status(:created)
+              |> put_session(:current_user_id, user.id)
+              |> render("acknowledge.json", %{message: "Logged In"})
             else
               render(conn, "errors.json", %{
                 errors: Constants.invalid_credentials()
@@ -49,6 +57,29 @@ defmodule FelixirWeb.AuthController do
 
       {_, _} ->
         render(conn, "errors.json", %{errors: Constants.internal_server_error()})
+    end
+  end
+
+  defp dont_exploit_me(conn, _params) do
+    if conn.assigns.user_signed_in? do
+       send_resp(conn, 401, Constants.not_authorized)
+
+       conn
+       |> halt()
+    else
+      conn
+    end
+    conn
+  end
+
+  defp protect_me(conn, params) do
+    if conn.assigns.user_signed_in? do
+      conn
+    else
+      send_resp(conn, 401, Constants.not_authenticated)
+
+      conn
+      |> halt()
     end
   end
 end

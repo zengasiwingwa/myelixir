@@ -22,6 +22,7 @@ defmodule FelixirWeb.Router do
     post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
     delete "/auth/logout", AuthController, :logout
+    get "/auth/me", AuthController, :get_me
   end
 
   scope "/api/graphql" do

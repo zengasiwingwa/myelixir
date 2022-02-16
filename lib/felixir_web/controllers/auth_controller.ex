@@ -9,7 +9,7 @@ defmodule FelixirWeb.AuthController do
   alias FelixirWeb.Utils
 
   plug :dont_exploit_me when action in [:login]
-  plug :protect_me when action in [:logout]
+  plug :protect_me when action in [:logout, :get_me]
 
   def login(conn, params) do
     case User.login_changeset(params) do
@@ -58,6 +58,10 @@ defmodule FelixirWeb.AuthController do
       {_, _} ->
         render(conn, "errors.json", %{errors: Constants.internal_server_error()})
     end
+  end
+
+  def get_me(conn, _params) do
+    render(conn, "getme.json", %{current_user: conn.assigns.current_user})
   end
 
   def logout(conn, _params) do

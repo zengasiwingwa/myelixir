@@ -13,8 +13,6 @@ defmodule FelixirWeb.Plugs.ProtectGraphql do
 
     if user_id do
       user = Auth.get_user!(user_id)
-      IO.puts("--- User --")
-      IO.inspect(user)
 
       case user do
         %User{} ->

@@ -5,7 +5,6 @@ defmodule Felixir.Chat do
 
   import Ecto.Query, warn: false
   alias Felixir.Repo
-
   alias Felixir.Chat.Room
 
   @doc """
@@ -18,7 +17,7 @@ defmodule Felixir.Chat do
 
   """
   def list_rooms do
-    Repo.all(Room)
+    Repo.all(from(r in Room, preload: [:user]))
   end
 
   @doc """

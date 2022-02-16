@@ -5,8 +5,8 @@ defmodule FelixirWeb.Schema.Types.UserType do
     field :id, :id
     field :name, :string
     field :username, :string
-    field :password, :string
     field :email, :string
     field :inserted_at, :string
+    field :rooms, list_of(:room_type)
   end
 end

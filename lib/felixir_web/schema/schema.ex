@@ -20,6 +20,11 @@ defmodule FelixirWeb.Schema do
     field :rooms, list_of(:room_type) do
       resolve(&Resolvers.RoomResolver.get_all_rooms/3)
     end
+
+    @desc "Get all messages"
+    field :messages, list_of(:message_type) do
+      resolve(&Resolvers.MessageResolver.get_all_messages/3)
+    end
   end
 
   mutation do
@@ -27,6 +32,12 @@ defmodule FelixirWeb.Schema do
     field :create_room, :boolean do
       arg(:input, non_null(:room_input_type))
       resolve(&Resolvers.RoomResolver.create_room/3)
+    end
+
+    @desc "Create Message"
+    field :create_message, :boolean do
+      arg(:input, non_null(:message_input_type))
+      resolve(&Resolvers.MessageResolver.create_message/3)
     end
 
     @desc "Delete Room"

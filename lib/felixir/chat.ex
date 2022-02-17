@@ -100,4 +100,21 @@ defmodule Felixir.Chat do
   def change_room(%Room{} = room, attrs \\ %{}) do
     Room.changeset(room, attrs)
   end
+
+  @doc """
+  Deletes a room.
+
+  ## Examples
+
+      iex> delete_room_by_id("1")
+      {:ok, %Room{}}
+
+      iex> delete_room(room)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_room_by_id(room_id, user_id) do
+    from(r in Room, where: r.id == ^room_id and r.user_id == ^user_id)
+    |> Repo.delete_all()
+  end
 end

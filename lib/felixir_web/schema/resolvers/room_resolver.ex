@@ -3,6 +3,18 @@ defmodule FelixirWeb.Schema.Resolvers.RoomResolver do
   alias FelixirWeb.Utils
   alias FelixirWeb.Constants
 
+  def delete_room(_, %{input: input}, %{context: context}) do
+    case Chat.delete_room_by_id(input.room_id, context.current_user.id) do
+      {1, _} ->
+        {:ok, true}
+
+      {0, _} -> {:error, Constants.not_found}
+
+      _ ->
+        {:error, Constants.internal_server_error()}
+    end
+  end
+
   def get_all_rooms(_, _, %{context: _context}) do
     rooms = Chat.list_rooms()
     {:ok, rooms}

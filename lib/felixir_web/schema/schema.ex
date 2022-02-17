@@ -28,5 +28,11 @@ defmodule FelixirWeb.Schema do
       arg(:input, non_null(:room_input_type))
       resolve(&Resolvers.RoomResolver.create_room/3)
     end
+
+    @desc "Delete Room"
+    field :delete_room, :boolean do
+      arg(:input, non_null(:delete_room_type))
+      resolve(&Resolvers.RoomResolver.delete_room/3)
+    end
   end
 end

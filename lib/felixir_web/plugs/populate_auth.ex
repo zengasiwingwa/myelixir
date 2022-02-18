@@ -1,11 +1,10 @@
 defmodule FelixirWeb.Plugs.PopulateAuth do
-
   import Plug.Conn
 
   alias Felixir.Auth
   alias Felixir.Auth.User
-  def init(_params) do
 
+  def init(_params) do
   end
 
   def call(conn, _params) do

@@ -23,6 +23,7 @@ defmodule FelixirWeb.Schema do
 
     @desc "Get all messages"
     field :messages, list_of(:message_type) do
+      arg(:input, non_null(:list_messages_type))
       resolve(&Resolvers.MessageResolver.get_all_messages/3)
     end
   end
@@ -44,6 +45,12 @@ defmodule FelixirWeb.Schema do
     field :delete_room, :boolean do
       arg(:input, non_null(:delete_room_type))
       resolve(&Resolvers.RoomResolver.delete_room/3)
+    end
+
+    @desc "Delete Message"
+    field :delete_message, :boolean do
+      arg(:input, non_null(:delete_message_type))
+      resolve(&Resolvers.MessageResolver.delete_message/3)
     end
   end
 end

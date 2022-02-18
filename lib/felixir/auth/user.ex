@@ -47,8 +47,8 @@ defmodule Felixir.Auth.User do
         new_changeset = put_change(changeset, :password, Argon2.hash_pwd_salt(password))
         new_changeset
 
-        _ ->
-          changeset
-      end
+      _ ->
+        changeset
+    end
   end
 end

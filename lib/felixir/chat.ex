@@ -17,7 +17,7 @@ defmodule Felixir.Chat do
 
   """
   def list_rooms do
-    Repo.all(from(r in Room, preload: [:user]))
+    Repo.all(from(r in Room, preload: [:user, :messages]))
   end
 
   @doc """
@@ -35,6 +35,8 @@ defmodule Felixir.Chat do
 
   """
   def get_room!(id), do: Repo.get!(Room, id)
+
+  def get_room(id), do: Repo.get(Room, id)
 
   @doc """
   Creates a room.

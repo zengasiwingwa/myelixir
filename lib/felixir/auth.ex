@@ -18,9 +18,7 @@ defmodule Felixir.Auth do
 
   """
   def list_users do
-    Repo.all(
-      from(u in User, preload: [:rooms])
-    )
+    Repo.all(from(u in User, preload: [:rooms]))
   end
 
   @doc """

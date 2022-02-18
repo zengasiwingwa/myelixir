@@ -72,13 +72,14 @@ defmodule FelixirWeb.AuthController do
 
   defp dont_exploit_me(conn, _params) do
     if conn.assigns.user_signed_in? do
-       send_resp(conn, 401, Constants.not_authorized)
+      send_resp(conn, 401, Constants.not_authorized())
 
-       conn
-       |> halt()
+      conn
+      |> halt()
     else
       conn
     end
+
     conn
   end
 
@@ -86,7 +87,7 @@ defmodule FelixirWeb.AuthController do
     if conn.assigns.user_signed_in? do
       conn
     else
-      send_resp(conn, 401, Constants.not_authenticated)
+      send_resp(conn, 401, Constants.not_authenticated())
 
       conn
       |> halt()

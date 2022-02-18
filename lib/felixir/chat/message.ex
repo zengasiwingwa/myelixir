@@ -17,8 +17,8 @@ defmodule Felixir.Chat.Message do
       [%Message{}, ...]
 
   """
-  def list_messages do
-    Repo.all(Message)
+  def list_messages(room_id) do
+    Repo.all(from(m in Message, where: m.room_id == ^room_id, preload: [:user, :room]))
   end
 
   @doc """
@@ -100,5 +100,22 @@ defmodule Felixir.Chat.Message do
   """
   def change_message(%Message{} = message, attrs \\ %{}) do
     Message.changeset(message, attrs)
+  end
+
+  @doc """
+  Deletes a message.
+
+  ## Examples
+
+      iex> delete_message_by_id(1, 3)
+      {:ok, %Message{}}
+
+      iex> delete_message(message)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_message_by_id(message_id, user_id) do
+    from(m in Message, where: m.id == ^message_id and m.user_id == ^user_id)
+    |> Repo.delete_all()
   end
 end

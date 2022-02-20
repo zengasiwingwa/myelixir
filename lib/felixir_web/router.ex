@@ -30,7 +30,8 @@ defmodule FelixirWeb.Router do
 
     get "/", Absinthe.Plug.GraphiQL,
       schema: FelixirWeb.Schema,
-      interactive: :playground
+      interactive: :playground,
+      socket: FelixirWeb.UserSocket
 
     post "/", Absinthe.Plug, schema: FelixirWeb.Schema
   end
